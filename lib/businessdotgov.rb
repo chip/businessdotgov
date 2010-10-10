@@ -91,19 +91,20 @@ module BusinessDotGov
     
     DATA_FORMATS = [:xml, :json]
     
-    def initialize
-      @format = :json
+    def initialize(format = :json)
+      @format = format
+      @industry, @state_abbreviation = nil
     end
     
     def search(options = {})
-      @industry = options[:industry]
-      @state_abbreviation = options[:state_abbreviation]
-      @format = options[:format] if options[:format]
+      @industry ||= options[:industry]
+      @state_abbreviation ||= options[:state_abbreviation]
+      @format ||= options[:format]
       if @industry.nil?
-        raise "Oops, an industry wasn't provided.  Please provide one of the following industries: #{INDUSTRIES.join(', ')}"
+        raise ArgumentError, "Oops, an industry wasn't provided.  Please provide one of the following industries: #{INDUSTRIES.join(', ')}"
       end
       if @state_abbreviation.nil?
-        raise "Oops, an US state wasn't provided.  Please provide one of the following US states: #{STATES.values.join(', ')}"
+        raise ArgumentError, "Oops, an US state wasn't provided.  Please provide one of the following US states: #{STATES.values.join(', ')}"
       end
       api_call = URI.escape(API_URL.sub(/STATE ABBREVIATION/, @state_abbreviation).sub(/INDUSTRY/, @industry).sub(/FORMAT/, @format.to_s))
       puts "api_call = #{api_call}"
@@ -117,4 +118,7 @@ module BusinessDotGov
   end
 end
 
-
+# b = BusinessDotGov::LoansGrants.new
+# b.industry = 'Technology'
+# b.state_abbreviation = 'FL'
+# b.search
