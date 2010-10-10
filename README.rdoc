@@ -5,20 +5,20 @@ http://www.business.gov/about/features/api/loans-grants/state-industry.html
 
 Examples:
 
-industries = BusinessDotGov::LoansGrants::INDUSTRIES
-@industry = industries[rand(industries.length)]      
-@state_abbreviation = 'FL'
+  industries = BusinessDotGov::LoansGrants::INDUSTRIES
+  @industry = industries[rand(industries.length)]      
+  @state_abbreviation = 'FL'
 
-# format is :json by default
-results = BusinessDotGov::LoansGrants.new.search({:industry => @industry, :state_abbreviation => @state_abbreviation})
-puts "Found #{results.size} results for #{@industry} within #{@state_abbreviation}"
-# :json format
-puts "First result title #{results.first['title']}"
+  # format is :json by default
+  results = BusinessDotGov::LoansGrants.new.search({:industry => @industry, :state_abbreviation => @state_abbreviation})
+  puts "Found #{results.size} results for #{@industry} within #{@state_abbreviation}"
+  # :json format
+  puts "First result title #{results.first['title']}"
 
-# specify if :xml format is desired
-results = BusinessDotGov::LoansGrants.new.search({:industry => @industry, :state_abbreviation => @state_abbreviation, :format => :xml})
-# :xml format
-puts "First result title #{results['grant_loans'][0]['title']}"
+  # specify if :xml format is desired
+  results = BusinessDotGov::LoansGrants.new.search({:industry => @industry, :state_abbreviation => @state_abbreviation, :format => :xml})
+  # :xml format
+  puts "First result title #{results['grant_loans'][0]['title']}"
 
 
 == Note on Patches/Pull Requests
